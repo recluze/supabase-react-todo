@@ -14,12 +14,17 @@ function App() {
       id: 2, 
       text: 'Delete todo'
     }
-  ], null)
+  ])
+
+  const deleteTodo = (id) => { 
+    console.log("Deleting: ", id)
+    setTodos(todos.filter((todos) => todos.id != id))
+  }
 
   return (
     <div className="container">
       <Header /> 
-      <Todos todos={ todos } /> 
+      <Todos todos={ todos } onDelete={deleteTodo} /> 
     </div>
   );
 }

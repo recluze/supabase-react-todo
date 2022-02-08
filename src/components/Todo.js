@@ -1,11 +1,10 @@
-const Todo = ({ todo }) => {
+const Todo = ({ todo, onDelete }) => {
   return (
     <div className="todo">
       <h3>
         
         { todo.text }
-
-        <span>x</span>
+        <button className='btn' onClick={() => onDelete(todo.id)}>x</button>
       </h3>
       
     </div>
