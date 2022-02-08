@@ -12,10 +12,13 @@ function App() {
 
     // fetch todos from database 
     const getTodos = async () => { 
+      await signIn()    // hard code sign in for now 
       const allTodos = await fetchTodos() 
       setTodos(allTodos)
+      await subscribeForInsert() 
     }
 
+    
     getTodos() 
   }, [])
 
@@ -39,6 +42,28 @@ function App() {
       .order('id',  { ascending: true })
     console.log(todos)
     return todos 
+   }
+
+   const signIn = async () => {
+    // just a dummy signup function 
+    let { user, error } = await supabase.auth.signIn({
+      email: 'recluze+sp1@gmail.com',
+      password: 'unpainted-usable-mangle'
+    })
+    console.log("Signed in .. ", user)
+   }
+
+   const subscribeForInsert = async () => { 
+    const posts = supabase
+      .from('todos')
+      .on('INSERT', payload => {
+        console.log('Some insert occurred on todos:', payload)
+        let new_todo = payload.new
+        setTodos([...todos, { id: new_todo.id, text: new_todo.text}])
+      })
+      .subscribe()
+      console.log("Subscribed for inserts on todos")
+      // remember to enable "Replication" in "Database" section 
    }
 
   const signup = async () => {
