@@ -3,7 +3,12 @@ import { useState } from 'react'
 import Header from './components/Header'
 import Todos from './components/Todos'
 
+import { supabase } from './supabaseClient'
+
 function App() {
+
+  
+  
 
   const [todos, setTodos] = useState([
     {
@@ -16,9 +21,25 @@ function App() {
     }
   ])
 
+  const deleteFromSupabase = async (id) => { 
+    const { data, error } = await supabase
+      .from('todos')
+      .delete()
+      .eq('id', id)
+    console.log(data)
+  }
+
   const deleteTodo = (id) => { 
     console.log("Deleting: ", id)
-    setTodos(todos.filter((todos) => todos.id != id))
+    // setTodos(todos.filter((todos) => todos.id != id))
+
+
+    // create a table in supabase for todos 
+    // install supabase dependency 
+    // set up the .env file.
+    // create the supabaseClient helper 
+    // issue the supabase delete API call 
+    deleteFromSupabase(id)
   }
 
   return (
