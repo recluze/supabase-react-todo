@@ -9,19 +9,37 @@ function App() {
 
   useEffect(() => {
     // signup()
+
+    // fetch todos from database 
+    const getTodos = async () => { 
+      const allTodos = await fetchTodos() 
+      setTodos(allTodos)
+    }
+
+    getTodos() 
   }, [])
 
 
-  const [todos, setTodos] = useState([
-    {
-      id: 1, 
-      text: 'Show todo'
-    }, 
-    {
-      id: 2, 
-      text: 'Delete todo'
-    }
-  ])
+  // const [todos, setTodos] = useState([
+  //   {
+  //     id: 1, 
+  //     text: 'Show todo'
+  //   }, 
+  //   {
+  //     id: 2, 
+  //     text: 'Delete todo'
+  //   }
+  // ])
+  const [todos, setTodos] = useState([])
+
+  const fetchTodos = async () => {
+    let { data: todos, error } = await supabase
+      .from('todos')
+      .select('*')
+      .order('id',  { ascending: true })
+    console.log(todos)
+    return todos 
+   }
 
   const signup = async () => {
     // just a dummy signup function 
@@ -42,7 +60,7 @@ function App() {
 
   const deleteTodo = (id) => { 
     console.log("Deleting: ", id)
-    // setTodos(todos.filter((todos) => todos.id != id))
+    setTodos(todos.filter((todos) => todos.id != id))
 
 
     // create a table in supabase for todos 
