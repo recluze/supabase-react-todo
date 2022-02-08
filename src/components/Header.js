@@ -1,6 +1,6 @@
 const Header = () => {
   return <header>
-      <h1>Hello from React</h1> 
+      <h1>Todo for Supabase</h1> 
   </header>;
 };
 
