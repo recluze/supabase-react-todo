@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import Header from './components/Header'
 import Todos from './components/Todos'
@@ -7,8 +7,10 @@ import { supabase } from './supabaseClient'
 
 function App() {
 
-  
-  
+  useEffect(() => {
+    // signup()
+  }, [])
+
 
   const [todos, setTodos] = useState([
     {
@@ -20,6 +22,15 @@ function App() {
       text: 'Delete todo'
     }
   ])
+
+  const signup = async () => {
+    // just a dummy signup function 
+    let { user, error } = await supabase.auth.signUp({
+      email: 'recluze+sp1@gmail.com',
+      password: 'unpainted-usable-mangle'
+    })
+    console.log(user)
+   }
 
   const deleteFromSupabase = async (id) => { 
     const { data, error } = await supabase
